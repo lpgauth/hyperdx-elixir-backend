@@ -27,9 +27,9 @@ defmodule Hyperdx.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:httpoison, "~> 1.8"},
-      {:jason, "~> 1.0"},
-      {:ssl_verify_fun, "~> 1.1.7"}
+      {:buoy, git: "https://github.com/lpgauth/buoy.git", tag: "0.2.4"},
+      {:metal, "0.1.1", [env: :prod, hex: "metal", override: true, repo: "hexpm"]},
+      {:jason, "~> 1.0"}
     ]
   end
 

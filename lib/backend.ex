@@ -5,6 +5,7 @@ defmodule Hyperdx.Backend do
 
   @impl true
   def init({__MODULE__, :hyperdx}) do
+    Hyperdx.init()
     {:ok, configure(:hyperdx, [])}
   end
 
@@ -28,7 +29,7 @@ defmodule Hyperdx.Backend do
   @impl true
   def handle_event({lvl, _gl, {Logger, msg, ts, metadata}}, state) do
     updated_state =
-      if log_level_matches?(lvl, state.level) do
+      if log_level_matches?(fix_level(lvl), state.level) do
         json_line = Hyperdx.Formatter.format(lvl, msg, ts, metadata)
         push(state, json_line)
       else
@@ -37,6 +38,9 @@ defmodule Hyperdx.Backend do
 
     {:ok, updated_state}
   end
+
+  def fix_level(:warn), do: :warning
+  def fix_level(level), do: level
 
   @impl true
   def terminate(reason, state) do

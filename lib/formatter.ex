@@ -5,9 +5,15 @@ defmodule Hyperdx.Formatter do
 
   def format(lvl, msg, ts, md) do
     {_, hostname} = :inet.gethostname()
+
     md
     |> metadata()
-    |> Enum.into(%{level: lvl, message: to_string(msg), timestamp: format_timestamp(ts), __hdx_h: to_string(hostname)})
+    |> Enum.into(%{
+      level: lvl,
+      message: to_string(msg),
+      timestamp: format_timestamp(ts),
+      __hdx_h: to_string(hostname)
+    })
     |> Jason.encode!()
   end
 
@@ -71,7 +77,7 @@ defmodule Hyperdx.Formatter do
   end
 
   defp metadata(_, ref) when is_reference(ref) do
-    '#Ref' ++ rest = :erlang.ref_to_list(ref)
+    ~c"#Ref" ++ rest = :erlang.ref_to_list(ref)
     rest
   end
 
