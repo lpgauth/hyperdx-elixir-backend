@@ -11,13 +11,13 @@ defmodule Hyperdx do
     case HTTPoison.post(url(), json_lines, default_headers()) do
       {:ok, %HTTPoison.Response{status_code: code, body: body}} ->
         unless code in 200..299 do
-          IO.warn(
+          IO.warning(
             "Hyperdx API warning: Dropping Logs: HTTP response status is #{code}. Response body is: #{inspect(body)}"
           )
         end
 
       {:error, reason} ->
-        IO.warn(
+        IO.warning(
           "Hyperdx API warning: Dropping Logs: HTTP request failed due to: #{inspect(reason)}"
         )
     end
