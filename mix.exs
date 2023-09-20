@@ -28,7 +28,8 @@ defmodule Hyperdx.MixProject do
   defp deps do
     [
       {:httpoison, "~> 1.8"},
-      {:jason, "~> 1.0"}
+      {:jason, "~> 1.0"},
+      {:ssl_verify_fun, "~> 1.1.7"}
     ]
   end
 
